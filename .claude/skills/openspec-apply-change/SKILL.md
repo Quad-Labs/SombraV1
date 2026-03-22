@@ -94,6 +94,7 @@ Implement tasks from an OpenSpec change.
    | Editing Go files | **go fmt hook** runs automatically after edit |
    | Editing Rust files | **rustfmt hook** runs automatically after edit |
    | Any .env, credentials, secrets, lock files | **PreToolUse hook** will BLOCK — use proper commands instead |
+   | Searching/exploring codebase for existing code, patterns, or related implementations | **grepai** MCP — use `grepai_search` for semantic search ("how does auth work?"), `grepai_trace_callers`/`grepai_trace_callees` for call graphs. Prefer over Grep for non-trivial searches. |
 
    Format reminders as a brief note before implementation:
    ```

@@ -57,6 +57,15 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[HOOK] Consider using grepai_search (MCP) instead of Grep for semantic code search. grepai understands code meaning and finds relevant results even when naming conventions vary. Use: grepai_search with a natural language query. Grep is still fine for exact pattern matching.'"
+          }
+        ]
+      },
+      {
         "matcher": "Edit|Write",
         "hooks": [
           {

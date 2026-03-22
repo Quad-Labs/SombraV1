@@ -96,6 +96,7 @@ All E2E and SDK tests use `client/src/test/mock-factory.ts` for deterministic mo
 
 ### MCP Servers
 
+- **grepai**: Semantic code search — use `grepai_search` instead of Grep for codebase exploration. Powered by local Ollama `nomic-embed-text` embeddings. Supports natural language queries ("how does MLS key rotation work?"), call graph tracing (`grepai_trace_callers`/`grepai_trace_callees`), and compact JSON output for token efficiency. **Prefer grepai over Grep for any non-trivial search.**
 - **context7**: Live documentation for OpenMLS, NATS, chi, SolidJS, Tauri, Panda CSS, mediasoup, fosite
 - **playwright**: Browser automation for E2E testing
 
