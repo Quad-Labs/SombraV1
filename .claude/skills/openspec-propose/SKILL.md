@@ -91,6 +91,15 @@ After completing all artifacts, summarize:
 - List of artifacts created with brief descriptions
 - What's ready: "All artifacts created! Ready for implementation."
 - Prompt: "Run `/opsx:apply` or ask me to implement to start working on the tasks."
+- **Available tools reminder**: List which skills, hooks, and agents are relevant for this change:
+  - `/sombra-feature` — if change involves UI/SDK/server features
+  - `/sombra-interface` — if change involves new Go subsystems
+  - `/simplify` — run after completing task groups
+  - **security-reviewer** agent — if change touches auth, crypto, permissions, federation
+  - **code-reviewer** agent — for architecture compliance review
+  - **context7** MCP — for library documentation lookup
+  - **playwright** MCP — for E2E test authoring and debugging
+  - Auto-formatting hooks: go fmt (Go), rustfmt (Rust) run after every edit
 
 **Artifact Creation Guidelines**
 

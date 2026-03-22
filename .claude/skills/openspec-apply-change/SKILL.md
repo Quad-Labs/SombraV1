@@ -68,6 +68,7 @@ Implement tasks from an OpenSpec change.
 
    For each pending task:
    - Show which task is being worked on
+   - **Show relevant tool reminders** (see Tool Reminders below)
    - Make the code changes required
    - Keep changes minimal and focused
    - Mark task complete in the tasks file: `- [ ]` → `- [x]`
@@ -78,6 +79,27 @@ Implement tasks from an OpenSpec change.
    - Implementation reveals a design issue → suggest updating artifacts
    - Error or blocker encountered → report and wait for guidance
    - User interrupts
+
+   **Tool Reminders — show relevant tools before starting each task:**
+
+   | Task involves... | Remind about |
+   |-----------------|-------------|
+   | New SolidJS component or UI feature | `/sombra-feature` skill (frontend-first TDD workflow) |
+   | New Go subsystem/interface | `/sombra-interface` skill (interface-first, present for approval) |
+   | Auth, crypto, permissions, federation, or SSRF code | **security-reviewer** agent (dispatch after implementation) |
+   | Any significant code changes | **code-reviewer** agent (validate architecture compliance) |
+   | Using OpenMLS, NATS, chi, SolidJS, Tauri, Panda CSS, mediasoup, fosite | **context7** MCP (look up latest docs) |
+   | Writing or debugging Playwright E2E tests | **playwright** MCP (browser automation) |
+   | Completing a task group (## heading) | `/simplify` skill (review for reuse, quality, efficiency) |
+   | Editing Go files | **go fmt hook** runs automatically after edit |
+   | Editing Rust files | **rustfmt hook** runs automatically after edit |
+   | Any .env, credentials, secrets, lock files | **PreToolUse hook** will BLOCK — use proper commands instead |
+
+   Format reminders as a brief note before implementation:
+   ```
+   Working on task 3.1: Implement user registration endpoint
+   💡 Tools: /sombra-interface (define AuthService interface first), context7 (chi router docs), security-reviewer (dispatch after)
+   ```
 
 7. **On completion or pause, show status**
 

@@ -1,0 +1,90 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "Bash(go fmt:*)",
+      "Bash(go test:*)",
+      "Bash(go vet:*)",
+      "Bash(go build:*)",
+      "Bash(cargo test:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo fmt:*)",
+      "Bash(cargo clippy:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "Bash(npx playwright:*)",
+      "Bash(npx vitest:*)",
+      "Bash(openspec:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(gh:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(wc:*)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "filepath=\"$CLAUDE_FILE_PATH\"; if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -q '\\.go$'; then gofmt -w \"$filepath\" 2>/dev/null; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "filepath=\"$CLAUDE_FILE_PATH\"; if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -q '\\.rs$'; then rustfmt \"$filepath\" 2>/dev/null; fi"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "filepath=\"$CLAUDE_FILE_PATH\"; if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '(\\.env|credentials|secrets|\\.secret|private_key|crypto/wasm/pkg/)'; then echo 'BLOCK: Protected file — do not edit directly. Contains sensitive data or is auto-generated.' >&2; exit 2; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "filepath=\"$CLAUDE_FILE_PATH\"; if [ -n \"$filepath\" ] && echo \"$filepath\" | grep -qE '(package-lock\\.json|yarn\\.lock|pnpm-lock\\.yaml|go\\.sum|Cargo\\.lock)$'; then echo 'BLOCK: Lock file — do not edit manually. Use package manager commands instead.' >&2; exit 2; fi"
+          }
+        ]
+      }
+    ],
+    "PostTaskComplete": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '[HOOK] Task group complete. Consider running /simplify to review changed code for reuse, quality, and efficiency.'"
+          }
+        ]
+      }
+    ]
+  }
+}
